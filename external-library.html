@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head><!--gh-guard v1 images=yes-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>WorldFirst Motion Library</title>
+<link rel="stylesheet" href="css/wf.css">
+<link rel="stylesheet" href="css/deck.css">
+
+<style>
+:root{--gate-ink:#111;--gate-mute:#8a8a8a;--gate-line:#e5e5e5;--gate-bg:#fff}
+@media (prefers-color-scheme:dark){:root{--gate-ink:#f2f2f2;--gate-mute:#8a8a8a;--gate-line:#2a2a2a;--gate-bg:#0e0e0e}}
+#gate{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;
+justify-content:center;background:var(--gate-bg);
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+#gate-card{width:min(320px,86vw);text-align:left}
+#gate-card h2{font-size:15px;font-weight:600;letter-spacing:-.01em;
+color:var(--gate-ink);margin:0 0 4px}
+#gate-card p{font-size:12px;color:var(--gate-mute);margin:0 0 20px;line-height:1.5}
+#gate-form{display:flex;gap:8px}
+#gate-input{flex:1;padding:9px 11px;font-size:13px;color:var(--gate-ink);
+background:transparent;border:1px solid var(--gate-line);border-radius:6px;outline:none}
+#gate-input:focus{border-color:var(--gate-ink)}
+#gate-btn{padding:9px 15px;font-size:13px;border:1px solid var(--gate-ink);
+border-radius:6px;background:var(--gate-ink);color:var(--gate-bg);cursor:pointer}
+#gate-err{min-height:16px;margin-top:9px;font-size:12px;color:#c0392b}
+#gate-foot{margin-top:22px;font-size:11px;color:var(--gate-mute)}
+.gate-lock{position:fixed;right:12px;bottom:10px;z-index:9998;font:11px
+-apple-system,BlinkMacSystemFont,sans-serif;color:#9a9a9a;cursor:pointer;
+opacity:.55;text-decoration:underline}
+.gate-lock:hover{opacity:1}
+</style>
+</head>
+<body class="gridmode" class="gate-locked">
+<div id="gate">
+  <div id="gate-card">
+    <h2>WorldFirst Motion Library</h2>
+    <p>Internal. Enter the password to continue.</p>
+    <form id="gate-form" onsubmit="return gateSubmit(event)">
+      <input id="gate-input" type="password" placeholder="password"
+             autocomplete="off" autofocus>
+      <button id="gate-btn" type="submit">Enter</button>
+    </form>
+    <div id="gate-err"></div>
+    <div id="gate-foot">Contents are encrypted, not merely hidden.</div>
+  </div>
+</div>
+<div id="gate-content" hidden></div>
+<script type="application/json" id="gate-payload">{"v": 1, "salt": "UChGJpDtfjnmaMjNYCLi8A==", "iv": "HGMMjwWIOxYxWDCS", "iterations": 100000, "ciphertext": "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"}</script>
+<script>
+(function(){
+  var KEY='gate:'+location.pathname;
+  function b2b(b64){var s=atob(b64),a=new Uint8Array(s.length);
+    for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
+  async function derive(pw,salt,it){
+    var base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),
+      'PBKDF2',false,['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:it,
+      hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  }
+  async function decrypt(pw){
+    var b=JSON.parse(document.getElementById('gate-payload').textContent);
+    var k=await derive(pw,b2b(b.salt),b.iterations);
+    var plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b2b(b.iv)},k,
+      b2b(b.ciphertext));
+    return new TextDecoder().decode(plain);
+  }
+  function runScripts(root){
+    root.querySelectorAll('script').forEach(function(old){
+      var s=document.createElement('script');
+      for(var i=0;i<old.attributes.length;i++){
+        s.setAttribute(old.attributes[i].name,old.attributes[i].value);
+      }
+      s.textContent=old.textContent;
+      old.parentNode.replaceChild(s,old);
+    });
+  }
+  function reveal(html){
+    var c=document.getElementById('gate-content');
+    c.innerHTML=html; c.hidden=false;
+    var g=document.getElementById('gate'); if(g) g.remove();
+    document.body.classList.remove('gate-locked');
+    runScripts(c);
+    var lock=document.createElement('div');
+    lock.className='gate-lock'; lock.textContent='lock device';
+    lock.onclick=function(){localStorage.removeItem(KEY);location.reload();};
+    document.body.appendChild(lock);
+    window.dispatchEvent(new Event('gate:unlocked'));
+    try{window.dispatchEvent(new Event('resize'));}catch(e){}
+  }
+  window.gateSubmit=async function(e){
+    e.preventDefault();
+    var inp=document.getElementById('gate-input');
+    var err=document.getElementById('gate-err');
+    err.textContent='';
+    try{
+      var html=await decrypt(inp.value);
+      localStorage.setItem(KEY,inp.value);
+      reveal(html);
+    }catch(_){ err.textContent='Wrong password.'; inp.select(); }
+    return false;
+  };
+  document.addEventListener('DOMContentLoaded',async function(){
+    var saved=localStorage.getItem(KEY);
+    if(!saved) return;
+    try{ reveal(await decrypt(saved)); }
+    catch(_){ localStorage.removeItem(KEY); }
+  });
+})();
+</script>
+</body>
+</html>
