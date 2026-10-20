@@ -1,0 +1,12 @@
+@font-face{font-family:Poppins;font-weight:400;src:url(../assets/fonts/Poppins-Regular.ttf)}
+@font-face{font-family:Poppins;font-weight:500;src:url(../assets/fonts/Poppins-Medium.ttf)}
+@font-face{font-family:Poppins;font-weight:600;src:url(../assets/fonts/Poppins-SemiBold.ttf)}
+@font-face{font-family:Poppins;font-weight:700;src:url(../assets/fonts/Poppins-Bold.ttf)}
+@font-face{font-family:Poppins;font-weight:800;src:url(../assets/fonts/Poppins-ExtraBold.ttf)}
+.wf-stage{position:absolute;left:0;top:0;width:960px;height:540px;overflow:hidden;background:#13002D;transform-origin:0 0;font-family:Poppins,sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+.wf-stage *{box-sizing:border-box}
+.wf-h1{font-family:Poppins;font-weight:800;letter-spacing:-0.03em;line-height:1.02}
+.wf-h2{font-family:Poppins;font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.wf-body{font-family:Poppins;font-weight:500;line-height:1.35}
+.wf-label{font-family:Poppins;font-weight:600;text-transform:uppercase;letter-spacing:.08em;line-height:1}
+.wf-pill{font-family:Poppins;font-weight:500;line-height:1.2}
